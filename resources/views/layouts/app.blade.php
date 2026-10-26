@@ -2,25 +2,43 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Pengadaan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@yield('title') - Sistem pengadaan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
 </head>
-<body class="bg-[#f8f9fb]">
-<div class="flex">
+<body>
+    @include('partials.navbar')
     @include('partials.sidebar')
-    <div class="flex-1 lg:ml-[260px] min-h-screen flex flex-col">
-        @include('partials.topbar')
-        <main class="p-4 lg:p-6 flex-1 overflow-y-auto">
+
+    {{-- navbar 56px (pt-14), sidebar 240px (lg:pl-60) --}}
+    <div class="pt-14 lg:pl-60">
+        <main class="mx-auto max-w-7xl p-4 sm:p-6">
+            @include('partials.flash')
             @yield('content')
         </main>
     </div>
-</div>
-<script>
-function toggleSidebar(){
-    document.getElementById('sidebar').classList.toggle('-translate-x-full');
-    document.getElementById('overlay').classList.toggle('hidden');
-}
-</script>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const menuButton = document.getElementById('menu-button');
+
+        function setSidebar(open) {
+            sidebar.classList.toggle('-translate-x-full', !open);
+            overlay.classList.toggle('hidden', !open);
+            menuButton.setAttribute('aria-expanded', open);
+        }
+        function toggleSidebar() {
+            setSidebar(sidebar.classList.contains('-translate-x-full'));
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') setSidebar(false);
+        });
+    </script>
+    @stack('scripts')
 </body>
 </html>

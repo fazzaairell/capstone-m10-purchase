@@ -1,9 +1,106 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
+/* ===== Token Panduan UI Bersama v1.0 (salinan dari Lampiran) ===== */
+:root {
+    /* netral */
+    --bg: #F6F8FB; --surface: #FFFFFF; --surface-2: #EDF1F7;
+    --line: #D3DAE6; --line-strong: #7B89A2;
+    --text: #0F172A; --text-muted: #4B5870;
+    /* merek */
+    --primary: #1F3F7A; --primary-hover: #172F5E; --primary-soft: #E4EBF8; --onprimary: #FFFFFF;
+    --accent: #0E7490;
+    /* status: fg = teks, bg = latar, solid = titik/ikon */
+    --success-fg: #166534; --success-bg: #DCFCE7; --success-solid: #16A34A;
+    --pending-fg: #7A4A00; --pending-bg: #FEF3C7; --pending-solid: #CA8A04;
+    --danger-fg: #991B1B; --danger-bg: #FEE2E2; --danger-solid: #DC2626;
+    --info-fg: #075985; --info-bg: #E0F2FE; --info-solid: #0284C7;
+    --neutral-fg: #334155; --neutral-bg: #E2E8F0; --neutral-solid: #64748B;
+    --danger-action: #B91C1C; --on-danger-action: #FFFFFF;
+    --shadow: 0 6px 20px rgba(15, 23, 42, .12);
+    /* tambahan lokal (tidak ada di panduan), untuk latar gelap laci di mobile */
+    --overlay: rgba(15, 23, 42, .45);
+}
 
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0E1522; --surface: #16203A; --surface-2: #1D2947;
+        --line: #2B3956; --line-strong: #6B7A96;
+        --text: #E6EBF4; --text-muted: #9FACC4;
+        --primary: #8FB1F5; --primary-hover: #A9C3F8; --primary-soft: #22335A; --onprimary: #0B1424;
+        --accent: #4CC3DE;
+        --success-fg: #86EFAC; --success-bg: #12351F; --success-solid: #4ADE80;
+        --pending-fg: #FCD34D; --pending-bg: #3A2D08; --pending-solid: #FACC15;
+        --danger-fg: #FCA5A5; --danger-bg: #451A1A; --danger-solid: #F87171;
+        --info-fg: #7DD3FC; --info-bg: #0C2E45; --info-solid: #38BDF8;
+        --neutral-fg: #CBD5E1; --neutral-bg: #27334B; --neutral-solid: #94A3B8;
+        --danger-action: #F87171; --on-danger-action: #2A0A0A;
+        --shadow: 0 6px 20px rgba(0, 0, 0, .45);
+        --overlay: rgba(0, 0, 0, .6);
+    }
+}
+
+/* ===== Hubungkan token ke Tailwind ===== */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-*: initial; /* hapus palet bawaan Tailwind, hanya token yang boleh dipakai */
+
+    --font-head: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --font-body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+    --radius-sm: 6px;
+    --radius-lg: 10px;
+
+    /* skala teks panduan (ukuran / tinggi baris) */
+    --text-display: 2rem;      --text-display--line-height: 2.5rem;
+    --text-h1: 1.75rem;        --text-h1--line-height: 2.25rem;
+    --text-h2: 1.375rem;       --text-h2--line-height: 1.875rem;
+    --text-h3: 1.125rem;       --text-h3--line-height: 1.625rem;
+    --text-body-lg: 1rem;      --text-body-lg--line-height: 1.5rem;
+    --text-body: 0.875rem;     --text-body--line-height: 1.375rem;
+    --text-label: 0.875rem;    --text-label--line-height: 1.25rem;
+    --text-caption: 0.75rem;   --text-caption--line-height: 1rem;
+}
+
+@theme inline {
+    --color-bg: var(--bg);
+    --color-surface: var(--surface);
+    --color-surface-2: var(--surface-2);
+    --color-line: var(--line);
+    --color-line-strong: var(--line-strong);
+    --color-text: var(--text);
+    --color-muted: var(--text-muted);
+
+    --color-primary: var(--primary);
+    --color-primary-hover: var(--primary-hover);
+    --color-primary-soft: var(--primary-soft);
+    --color-onprimary: var(--onprimary);
+    --color-accent: var(--accent);
+
+    --color-success-fg: var(--success-fg);  --color-success-bg: var(--success-bg);  --color-success-solid: var(--success-solid);
+    --color-pending-fg: var(--pending-fg);  --color-pending-bg: var(--pending-bg);  --color-pending-solid: var(--pending-solid);
+    --color-danger-fg: var(--danger-fg);    --color-danger-bg: var(--danger-bg);    --color-danger-solid: var(--danger-solid);
+    --color-info-fg: var(--info-fg);        --color-info-bg: var(--info-bg);        --color-info-solid: var(--info-solid);
+    --color-neutral-fg: var(--neutral-fg);  --color-neutral-bg: var(--neutral-bg);  --color-neutral-solid: var(--neutral-solid);
+
+    --color-danger-action: var(--danger-action);
+    --color-on-danger-action: var(--on-danger-action);
+    --color-overlay: var(--overlay);
+
+    --shadow-float: var(--shadow);
+}
+
+@layer base {
+    *, ::before, ::after { border-color: var(--line); }
+
+    body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        line-height: 1.375rem;
+    }
+
+    h1, h2, h3 { font-family: var(--font-head); }
+
+    /* fokus: garis 2px warna utama di luar elemen */
+    :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 }
