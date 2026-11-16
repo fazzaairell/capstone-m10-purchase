@@ -6,6 +6,8 @@
     <nav aria-label="Jejak halaman" class="text-caption text-muted">
         Pengadaan /
         <a href="{{ route('suppliers.index') }}" class="text-primary hover:underline">Supplier</a>
+        /
+        <a href="{{ route('suppliers.show', $supplier) }}" class="text-primary hover:underline">{{ $supplier->supplier_code }}</a>
         / Edit
     </nav>
 

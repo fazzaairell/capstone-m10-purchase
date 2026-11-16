@@ -10,8 +10,13 @@ Route::resource('suppliers', SupplierController::class);
 
 // Placeholder untuk menu sidebar yang modulnya belum dibuat.
 // Ganti dengan Route::resource(...) kalau modulnya sudah ada.
-Route::view('/permintaan-pembelian', 'segera', ['judul' => 'Permintaan pembelian'])
-    ->name('purchase-requests.index');
+use App\Http\Controllers\PurchaseRequestController;
+
+// menu sidebar "Permintaan pembelian" sementara diarahkan ke form,
+// ganti dengan halaman daftar kalau sudah dibuat
+Route::redirect('permintaan-pembelian', '/permintaan-pembelian/baru')->name('purchase-requests.index');
+Route::get('permintaan-pembelian/baru', [PurchaseRequestController::class, 'create'])->name('purchase-requests.create');
+Route::post('permintaan-pembelian', [PurchaseRequestController::class, 'store'])->name('purchase-requests.store');
 
 Route::view('/purchase-order', 'segera', ['judul' => 'Purchase order'])
     ->name('purchase-orders.index');

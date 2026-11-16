@@ -1,7 +1,7 @@
 {{-- Toast sukses: pojok kanan atas, garis kiri 4px sesuai status --}}
 @if (session('success'))
     <div data-toast role="status"
-         class="fixed left-4 right-4 top-16 z-50 flex items-start gap-3 rounded-lg border border-l-4 border-l-success-solid bg-surface p-4 shadow-float sm:left-auto sm:w-90">
+         class="toast-in fixed left-4 right-4 top-16 z-50 flex items-start gap-3 rounded-lg border border-l-4 border-l-success-solid bg-surface p-4 shadow-float sm:left-auto sm:w-90">
         <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-success-bg text-success-fg">
             <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>

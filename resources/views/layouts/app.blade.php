@@ -35,8 +35,16 @@
         function toggleSidebar() {
             setSidebar(sidebar.classList.contains('-translate-x-full'));
         }
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') setSidebar(false);
+
+            // tekan "/" untuk langsung membuka pencarian
+            const typing = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+            if (e.key === '/' && !typing) {
+                e.preventDefault();
+                document.getElementById('global-search')?.focus();
+            }
         });
     </script>
     @stack('scripts')

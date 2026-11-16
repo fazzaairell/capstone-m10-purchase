@@ -20,15 +20,17 @@
                 <path stroke-linecap="round" d="M12 4v16"/>
             </svg>
         </span>
-        <span class="hidden sm:inline">Sistem pengadaan</span>
+        <span class="hidden sm:inline">Araya Bussines Hub</span>
     </a>
 
     {{-- pencarian global (tengah) --}}
     <form role="search" action="{{ url('/pencarian') }}" method="GET"
-          class="hidden md:mx-auto md:block md:max-w-xl md:flex-1">
+          class="relative hidden md:mx-auto md:block md:max-w-xl md:flex-1">
         <label for="global-search" class="sr-only">Cari di seluruh sistem</label>
+        <x-icon name="search" class="pointer-events-none absolute left-4 top-2.5 text-muted" />
         <input id="global-search" type="search" name="q" placeholder="Cari di seluruh sistem"
-               class="h-10 w-full rounded-sm border border-line-strong bg-surface px-3 placeholder:text-muted">
+               class="h-10 w-full rounded-sm border border-line-strong bg-surface pl-12 pr-12 placeholder:text-muted">
+        <kbd class="pointer-events-none absolute right-2 top-2 flex h-6 items-center rounded-sm border border-line px-2 text-caption text-muted">/</kbd>
     </form>
 
     {{-- akun (kanan) --}}

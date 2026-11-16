@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SupplierRequest;
 use App\Models\Supplier;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
-    /** Daftar supplier: pencarian + pagination (10, 25, atau 50 baris) */
+    /** Daftar: pencarian, filter status dan pengiriman, pagination 10/25/50 */
     public function index(Request $request)
     {
         $perPage = in_array((int) $request->per_page, [10, 25, 50], true)
@@ -18,15 +17,32 @@ class SupplierController extends Controller
 
         $suppliers = Supplier::query()
             ->when($request->q, fn ($q, $s) => $q->where(function ($q) use ($s) {
-                $q->where('name', 'like', "%{$s}%")
-                  ->orWhere('contact', 'like', "%{$s}%")
-                  ->orWhere('kode', 'like', "%{$s}%");
+                $q->where('supplier_code', 'like', "%{$s}%")
+                  ->orWhere('company_name', 'like', "%{$s}%")
+                  ->orWhere('contact_person', 'like', "%{$s}%")
+                  ->orWhere('email', 'like', "%{$s}%")
+                  ->orWhere('phone', 'like', "%{$s}%")
+                  ->orWhere('city', 'like', "%{$s}%");
             }))
-            ->orderBy('kode')
+            ->when(
+                array_key_exists((string) $request->status, Supplier::STATUSES),
+                fn ($q) => $q->where('status', $request->status)
+            )
+            ->when(
+                array_key_exists((string) $request->delivery, Supplier::DELIVERY_TYPES),
+                fn ($q) => $q->where('delivery_type', $request->delivery)
+            )
+            ->orderBy('supplier_code')
             ->paginate($perPage)
             ->withQueryString();
 
-        return view('supplier.index', compact('suppliers'));
+        // jumlah supplier per status, untuk kartu ringkasan di atas tabel
+        $counts = Supplier::query()
+            ->selectRaw('status, count(*) as total')
+            ->groupBy('status')
+            ->pluck('total', 'status');
+
+        return view('supplier.index', compact('suppliers', 'counts'));
     }
 
     /** Form tambah supplier */
@@ -42,7 +58,7 @@ class SupplierController extends Controller
 
         return redirect()->route('suppliers.index')
             ->with('success', 'Supplier tersimpan')
-            ->with('success_detail', "{$supplier->name} sudah masuk daftar supplier.");
+            ->with('success_detail', "{$supplier->company_name} ({$supplier->supplier_code}) sudah masuk daftar supplier.");
     }
 
     /** Detail supplier */
@@ -62,23 +78,18 @@ class SupplierController extends Controller
     {
         $supplier->update($request->validated());
 
-        return redirect()->route('suppliers.index')
+        return redirect()->route('suppliers.show', $supplier)
             ->with('success', 'Perubahan tersimpan')
-            ->with('success_detail', "Data {$supplier->name} sudah diperbarui.");
+            ->with('success_detail', "Data {$supplier->company_name} sudah diperbarui.");
     }
 
-    /** Hapus supplier */
+    /** Soft delete: data disembunyikan dari daftar, tidak dihapus permanen */
     public function destroy(Supplier $supplier)
     {
-        try {
-            $supplier->delete();
-        } catch (QueryException $e) {
-            // misalnya supplier sudah dipakai di purchase order
-            return back()->with('error', 'Supplier tidak bisa dihapus karena masih dipakai di data lain.');
-        }
+        $supplier->delete();
 
         return redirect()->route('suppliers.index')
             ->with('success', 'Supplier dihapus')
-            ->with('success_detail', "{$supplier->name} sudah dihapus dari daftar.");
+            ->with('success_detail', "{$supplier->company_name} tidak tampil lagi di daftar. Riwayat transaksinya tetap tersimpan.");
     }
 }
