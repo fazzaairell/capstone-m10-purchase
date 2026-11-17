@@ -14,7 +14,7 @@ use App\Http\Controllers\PurchaseRequestController;
 
 // menu sidebar "Permintaan pembelian" sementara diarahkan ke form,
 // ganti dengan halaman daftar kalau sudah dibuat
-Route::redirect('permintaan-pembelian', '/permintaan-pembelian/baru')->name('purchase-requests.index');
+Route::get('permintaan-pembelian', [PurchaseRequestController::class, 'index'])->name('purchase-requests.index');
 Route::get('permintaan-pembelian/baru', [PurchaseRequestController::class, 'create'])->name('purchase-requests.create');
 Route::post('permintaan-pembelian', [PurchaseRequestController::class, 'store'])->name('purchase-requests.store');
 

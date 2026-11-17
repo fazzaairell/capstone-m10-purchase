@@ -71,17 +71,17 @@ class PurchaseRequestStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'required'              => 'Isi :attribute.',
-            'in'                    => 'Pilihan :attribute tidak dikenal. Pilih dari daftar.',
-            'numeric'               => 'Isi :attribute dengan angka saja, misalnya 2000.',
-            'max.string'            => ':attribute maksimal :max karakter. Persingkat isinya.',
-            'max.numeric'           => 'Angka :attribute terlalu besar. Periksa lagi.',
-            'min.numeric'           => ':attribute tidak boleh kurang dari :min.',
-            'department.required'   => 'Pilih departemen.',
-            'items.required'        => 'Tambahkan minimal satu barang atau jasa.',
-            'items.min'             => 'Tambahkan minimal satu barang atau jasa.',
-            'items.*.quantity.gt'   => 'Jumlah harus lebih dari 0.',
-            'action.required'       => 'Pilih Simpan draf atau Kirim pengajuan.',
+            'required'            => 'Isi :attribute.',
+            'in'                  => 'Pilihan :attribute tidak dikenal. Pilih dari daftar.',
+            'numeric'             => 'Isi :attribute dengan angka saja, misalnya 2000.',
+            'max.string'          => ':attribute maksimal :max karakter. Persingkat isinya.',
+            'max.numeric'         => 'Angka :attribute terlalu besar. Periksa lagi.',
+            'min.numeric'         => ':attribute tidak boleh kurang dari :min.',
+            'department.required' => 'Pilih departemen.',
+            'items.required'      => 'Tambahkan minimal satu barang atau jasa.',
+            'items.min'           => 'Tambahkan minimal satu barang atau jasa.',
+            'items.*.quantity.gt' => 'Jumlah harus lebih dari 0.',
+            'action.required'     => 'Pilih Simpan draf atau Kirim pengajuan.',
         ];
     }
 }

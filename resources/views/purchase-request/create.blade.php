@@ -17,9 +17,11 @@
         $btn2 = 'inline-flex h-10 items-center gap-2 rounded-sm border border-line-strong bg-surface px-4 text-label font-semibold transition-colors hover:bg-surface-2';
     @endphp
 
-    <nav aria-label="Jejak halaman" class="text-caption text-muted">
-        Pengadaan / Permintaan pembelian / Buat baru
-    </nav>
+<nav aria-label="Jejak halaman" class="text-caption text-muted">
+    Pengadaan /
+    <a href="{{ route('purchase-requests.index') }}" class="text-primary hover:underline">Permintaan pembelian</a>
+    / Buat baru
+</nav>
 
     <h1 class="mb-6 mt-2 font-head text-h1 font-bold">Buat permintaan pembelian</h1>
 
@@ -101,8 +103,8 @@
 
                 <div class="flex flex-wrap items-center justify-end gap-3">
                     {{-- setelah ada halaman daftar, arahkan Batal ke sana --}}
-                    <a href="{{ route('purchase-requests.create') }}"
-                       class="inline-flex h-10 items-center px-4 text-label font-semibold text-primary hover:underline">Batal</a>
+                    <a href="{{ route('purchase-requests.index') }}"
+                    class="inline-flex h-10 items-center px-4 text-label font-semibold text-primary hover:underline">Batal</a>
 
                     <button type="submit" name="action" value="draft" data-submit class="{{ $btn2 }} disabled:cursor-not-allowed disabled:text-muted">
                         Simpan draf
